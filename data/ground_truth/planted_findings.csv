@@ -1,0 +1,16 @@
+finding,sif_id,ie_category
+ie_rate_above_lopa,SIF-10-018,operator_error
+ie_rate_above_lopa,SIF-10-036,utility_loss
+ie_rate_above_lopa,SIF-20-019,loss_of_cooling
+ie_rate_above_lopa,SIF-20-024,bpcs_loop_failure
+ie_rate_above_lopa,SIF-20-031,utility_loss
+ie_rate_above_lopa,SIF-20-038,blocked_outlet
+ie_rate_above_lopa,SIF-30-030,rotating_equipment_trip
+ie_rate_above_lopa,SIF-40-026,blocked_outlet
+ie_rate_above_lopa,SIF-50-011,bpcs_loop_failure
+ie_rate_above_lopa,SIF-60-013,loss_of_cooling
+ie_not_in_lopa,SIF-60-038,rotating_equipment_trip
+ie_not_in_lopa,SIF-60-006,operator_error
+ie_not_in_lopa,SIF-30-021,utility_loss
+ie_not_in_lopa,SIF-50-020,utility_loss
+ie_not_in_lopa,SIF-60-013,bpcs_loop_failure

@@ -1,0 +1,73 @@
+{
+  "narratives": 440,
+  "classifier_macro_f1": 0.951,
+  "classifier_accuracy": 0.964,
+  "keyword_baseline_macro_f1": 0.555,
+  "keyword_baseline_accuracy": 0.643,
+  "outcome_accuracy": 1.0,
+  "link_coverage": 0.843,
+  "link_precision": 0.995,
+  "link_coverage_by_method": {
+    "sif_id": 245,
+    "tag": 118,
+    "ambiguous": 38,
+    "unlinked": 31,
+    "equipment+variable": 8
+  },
+  "needs_review": 92,
+  "flags_ie_rate_above_lopa": {
+    "flagged": 5,
+    "planted": 10,
+    "true_positives": 5,
+    "precision": 1.0,
+    "recall": 0.5,
+    "missed": [
+      "SIF-10-018/operator_error",
+      "SIF-20-024/bpcs_loop_failure",
+      "SIF-20-038/blocked_outlet",
+      "SIF-40-026/blocked_outlet",
+      "SIF-60-013/loss_of_cooling"
+    ],
+    "false_flags": []
+  },
+  "flags_ie_not_in_lopa": {
+    "flagged": 2,
+    "planted": 5,
+    "true_positives": 2,
+    "precision": 1.0,
+    "recall": 0.4,
+    "missed": [
+      "SIF-50-020/utility_loss",
+      "SIF-60-006/operator_error",
+      "SIF-60-038/rotating_equipment_trip"
+    ],
+    "false_flags": []
+  },
+  "oracle_flags_ie_rate_above_lopa": {
+    "flagged": 6,
+    "planted": 10,
+    "true_positives": 6,
+    "precision": 1.0,
+    "recall": 0.6,
+    "missed": [
+      "SIF-20-024/bpcs_loop_failure",
+      "SIF-20-038/blocked_outlet",
+      "SIF-40-026/blocked_outlet",
+      "SIF-60-013/loss_of_cooling"
+    ],
+    "false_flags": []
+  },
+  "oracle_flags_ie_not_in_lopa": {
+    "flagged": 2,
+    "planted": 5,
+    "true_positives": 2,
+    "precision": 1.0,
+    "recall": 0.4,
+    "missed": [
+      "SIF-50-020/utility_loss",
+      "SIF-60-006/operator_error",
+      "SIF-60-038/rotating_equipment_trip"
+    ],
+    "false_flags": []
+  }
+}

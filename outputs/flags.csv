@@ -1,0 +1,8 @@
+finding,sif_id,ie_category,evidence
+Initiating event more frequent than LOPA assumed,SIF-30-030,rotating_equipment_trip,19 events in 4.99 yr vs 2.50 expected (q=0.000)
+Initiating event more frequent than LOPA assumed,SIF-20-019,loss_of_cooling,6 events in 4.99 yr vs 0.25 expected (q=0.000)
+Initiating event more frequent than LOPA assumed,SIF-20-031,utility_loss,7 events in 4.99 yr vs 0.50 expected (q=0.000)
+Initiating event more frequent than LOPA assumed,SIF-10-036,utility_loss,6 events in 4.99 yr vs 0.50 expected (q=0.002)
+Initiating event more frequent than LOPA assumed,SIF-50-011,bpcs_loop_failure,6 events in 4.99 yr vs 1.00 expected (q=0.057)
+Initiating event not in the SIF's LOPA,SIF-60-013,bpcs_loop_failure,"3 events: N0021, N0085, N0168"
+Initiating event not in the SIF's LOPA,SIF-30-021,utility_loss,"2 events: N0152, N0276"
