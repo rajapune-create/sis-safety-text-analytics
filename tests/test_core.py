@@ -5,12 +5,12 @@ import numpy as np
 import pandas as pd
 import pytest
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from sis_text.analysis import benjamini_hochberg, poisson_exceed_p, scenario_table  # noqa: E402
-from sis_text.classify import keyword_baseline, outcome  # noqa: E402
-from sis_text.extract import SifLinker, find_sif_ids, find_tags  # noqa: E402
-from sis_text.textclean import clean  # noqa: E402
+from src.data.preprocess import clean  # noqa: E402
+from src.features.sif_linking import SifLinker, find_sif_ids, find_tags  # noqa: E402
+from src.lopa.compare import benjamini_hochberg, poisson_exceed_p, scenario_table  # noqa: E402
+from src.models.classifier import keyword_baseline, outcome  # noqa: E402
 
 
 @pytest.mark.parametrize("text", ["SIF-20-014 tripped", "sif 20-014 acted", "SIF20014 did not act", "per sif-20-014"])

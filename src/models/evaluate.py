@@ -12,11 +12,9 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import accuracy_score, confusion_matrix, f1_score
 
-from .analysis import scenario_table, unanalysed_ie
-from .classify import CLASSES
-from .pipeline import DATA, OUT, ROOT
-
-DOCS = ROOT / "docs"
+from src.lopa.compare import scenario_table, unanalysed_ie
+from src.models.classifier import CLASSES
+from src.utils.paths import DATA_RAW, FIGURES, GROUND_TRUTH, REPORTS
 BLUE, ORANGE, INK, MUTED, GRID = "#2a78d6", "#eb6834", "#0b0b0b", "#52514e", "#e4e3df"
 SHORT = {"bpcs_loop_failure": "BPCS loop", "loss_of_cooling": "Cooling loss",
          "rotating_equipment_trip": "Rotating eqpt", "operator_error": "Operator error",
@@ -33,10 +31,9 @@ def _flag_score(found: set, planted: set) -> dict:
 
 
 def run(tagged: pd.DataFrame, scen_t: pd.DataFrame, flags: pd.DataFrame, years: float) -> dict:
-    DOCS.mkdir(exist_ok=True)
-    truth = pd.read_csv(DATA / "ground_truth" / "narrative_labels.csv")
-    planted = pd.read_csv(DATA / "ground_truth" / "planted_findings.csv")
-    scen = pd.read_csv(DATA / "lopa_scenarios.csv")
+    truth = pd.read_csv(GROUND_TRUTH / "narrative_labels.csv")
+    planted = pd.read_csv(GROUND_TRUTH / "planted_findings.csv")
+    scen = pd.read_csv(DATA_RAW / "lopa_scenarios.csv")
     df = tagged.merge(truth, on="narrative_id")
 
     m = {}
@@ -68,7 +65,7 @@ def run(tagged: pd.DataFrame, scen_t: pd.DataFrame, flags: pd.DataFrame, years: 
     m["oracle_flags_ie_not_in_lopa"] = _flag_score(
         {(r.sif_id, r.ie_category) for r in unanalysed_ie(ev, scen).itertuples()}, new_planted)
 
-    (OUT / "validation_metrics.json").write_text(json.dumps(m, indent=2))
+    (REPORTS / "validation_metrics.json").write_text(json.dumps(m, indent=2))
     _figures(df, scen_t, rate_planted, years)
     return m
 
@@ -118,7 +115,7 @@ def _figures(df, scen_t, rate_planted, years):
     fig.text(0.01, 0.01, "Synthetic data. Points jittered slightly so overlapping counts stay visible.",
              fontsize=7.5, color=MUTED)
     fig.tight_layout(rect=(0, 0.03, 1, 1))
-    fig.savefig(DOCS / "observed_vs_lopa.png")
+    fig.savefig(FIGURES / "observed_vs_lopa.png")
     plt.close(fig)
 
     # 2. Confusion matrix (row-normalised) for the initiating-event classifier.
@@ -143,5 +140,5 @@ def _figures(df, scen_t, rate_planted, years):
     for s in ax.spines.values():
         s.set_visible(False)
     fig.tight_layout()
-    fig.savefig(DOCS / "confusion_matrix.png")
+    fig.savefig(FIGURES / "confusion_matrix.png")
     plt.close(fig)

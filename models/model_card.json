@@ -1,0 +1,15 @@
+{
+  "model": "TF-IDF (words + char n-grams) + class-balanced logistic regression",
+  "trained_on": "440 synthetic labelled narratives",
+  "classes": [
+    "blocked_outlet",
+    "bpcs_loop_failure",
+    "loss_of_cooling",
+    "operator_error",
+    "rotating_equipment_trip",
+    "spurious_trip",
+    "utility_loss"
+  ],
+  "trained": "2026-10-23",
+  "note": "Synthetic data only. Retrain and re-validate on real labelled narratives before any use."
+}

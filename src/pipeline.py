@@ -1,29 +1,22 @@
 """End-to-end run: narratives -> cleaned text -> SIF link + initiating event + outcome -> LOPA comparison.
 
-Writes outputs/narratives_tagged.csv, outputs/scenario_review.csv and outputs/ehss_review_pack.xlsx.
+Writes data/processed/ (tagged narratives, scenario review, flags) and reports/ehss_review_pack.xlsx.
 """
 from __future__ import annotations
 
-from pathlib import Path
-
 import pandas as pd
 
-from .analysis import scenario_table, unanalysed_ie
-from .classify import keyword_baseline, out_of_fold_predict, outcome
-from .extract import SifLinker
-from .textclean import clean
-
-ROOT = Path(__file__).resolve().parents[2]
-DATA, OUT = ROOT / "data", ROOT / "outputs"
+from src.data.load_data import load_data
+from src.data.preprocess import clean
+from src.features.sif_linking import SifLinker
+from src.lopa.compare import scenario_table, unanalysed_ie
+from src.models.classifier import keyword_baseline, out_of_fold_predict, outcome
+from src.utils.paths import DATA_PROCESSED, REPORTS
 LOW_CONFIDENCE = 0.55
 
 
 def load():
-    reg = pd.read_csv(DATA / "sif_register.csv")
-    scen = pd.read_csv(DATA / "lopa_scenarios.csv")
-    narr = pd.read_csv(DATA / "narratives.csv", parse_dates=["date"])
-    labels = pd.read_csv(DATA / "ground_truth" / "narrative_labels.csv")
-    return reg, scen, narr, labels
+    return load_data()
 
 
 def tag_narratives(reg, narr, labels):
@@ -46,7 +39,6 @@ def observation_years(narr) -> float:
 
 
 def run():
-    OUT.mkdir(exist_ok=True)
     reg, scen, narr, labels = load()
     years = observation_years(narr)
     tagged = tag_narratives(reg, narr, labels)
@@ -73,9 +65,9 @@ def run():
                       )[["finding", "sif_id", "ie_category", "evidence"]],
     ], ignore_index=True)
 
-    tagged.to_csv(OUT / "narratives_tagged.csv", index=False)
-    scen_t.to_csv(OUT / "scenario_review.csv", index=False)
-    flags.to_csv(OUT / "flags.csv", index=False)
+    tagged.to_csv(DATA_PROCESSED / "narratives_tagged.csv", index=False)
+    scen_t.to_csv(DATA_PROCESSED / "scenario_review.csv", index=False)
+    flags.to_csv(DATA_PROCESSED / "flags.csv", index=False)
 
     readme = pd.DataFrame({"How to read this pack": [
         "Synthetic demonstration data only. Not from any real plant.",
@@ -87,7 +79,7 @@ def run():
         f"Needs_review: narratives with no SIF link or classifier confidence below {LOW_CONFIDENCE}.",
         "A flag is a prompt for engineering review, not a conclusion.",
     ]})
-    with pd.ExcelWriter(OUT / "ehss_review_pack.xlsx") as xw:
+    with pd.ExcelWriter(REPORTS / "ehss_review_pack.xlsx") as xw:
         readme.to_excel(xw, sheet_name="README", index=False)
         flags.to_excel(xw, sheet_name="Flags", index=False)
         scen_t.to_excel(xw, sheet_name="Scenario_review", index=False)

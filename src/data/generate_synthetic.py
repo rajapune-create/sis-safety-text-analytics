@@ -5,8 +5,8 @@ The generator also writes the ground truth (true initiating event, outcome, SIF 
 list of deliberately "planted" findings) so the pipeline can be validated against it.
 
 Usage:
-    python data/generate_synthetic.py            # writes CSVs into data/
-    python data/generate_synthetic.py --seed 7   # a different synthetic plant
+    python -m src.data.generate_synthetic            # writes CSVs into data/raw/
+    python -m src.data.generate_synthetic --seed 7   # a different synthetic plant
 """
 from __future__ import annotations
 
@@ -19,7 +19,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-OUT = Path(__file__).resolve().parent
+OUT = Path(__file__).resolve().parents[2] / "data" / "raw"
 YEARS = 5
 START = date(2021, 1, 1)
 
@@ -354,9 +354,12 @@ def main():
     narr.to_csv(OUT / "narratives.csv", index=False)
     gt.to_csv(OUT / "ground_truth" / "narrative_labels.csv", index=False)
     planted.to_csv(OUT / "ground_truth" / "planted_findings.csv", index=False)
+    sample = OUT.parent / "sample"
+    sample.mkdir(exist_ok=True)
+    narr.head(25).to_csv(sample / "narratives_sample.csv", index=False)  # quick look without the full set
     print(f"{len(sifs)} SIFs, {len(scen)} LOPA scenarios, {len(narr)} narratives, {len(planted)} planted findings")
 
 
 if __name__ == "__main__":
-    (OUT / "ground_truth").mkdir(exist_ok=True)
+    (OUT / "ground_truth").mkdir(parents=True, exist_ok=True)
     main()
