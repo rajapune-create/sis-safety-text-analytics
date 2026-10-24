@@ -2,7 +2,7 @@
 
 **Read years of shift-log and incident narratives, work out which SIF each one is about and what initiated it, and show the EHSS team where real plant history disagrees with the LOPA.**
 
-![CI](https://github.com/rajapune-create/sis-safety-text-analytics/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/raja-y-sekaran/sis-safety-text-analytics/actions/workflows/ci.yml/badge.svg)
 
 ![Observed vs LOPA-assumed initiating events](reports/figures/observed_vs_lopa.png)
 
